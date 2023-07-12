@@ -17,7 +17,7 @@ services:
       - migration
 
   db:
-    image: postgres
+    image: postgres:alpine
     restart: always
     environment:
       POSTGRES_DB: jutsu_db
@@ -40,7 +40,7 @@ services:
 
 
   redis:
-    image: redis
+    image: redis:alpine
     expose:
       - 6379
 

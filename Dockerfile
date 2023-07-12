@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.10-slim
 
 ENV PYTHONIOENCODING UTF-8
 ENV TZ=Asia/Bishkek
