@@ -42,7 +42,7 @@ services:
   redis:
     image: redis:alpine
     expose:
-      - 6379
+      - 6378
 
   celery:
     build: .
