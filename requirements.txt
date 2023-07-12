@@ -1,0 +1,16 @@
+django
+djangorestframework
+pillow
+psycopg2-binary
+python-decouple
+dj_rest_auth
+drf-yasg
+django-filter
+djangorestframework-jwt
+django-rest-swagger
+uuid
+djangorestframework-simplejwt
+django-star-ratings
+celery
+redis
+django-redis
