@@ -59,3 +59,10 @@ class PostImage(models.Model):
     image = models.ImageField(upload_to='shots', blank=True, null=True)
     post = models.ForeignKey(
         Movies, on_delete=models.CASCADE, related_name='images')
+
+class SeriesMovie(models.Model):
+    title = models.CharField(verbose_name="Название", max_length=300)
+    seria = models.FileField(upload_to='series',null=True)
+    post = models.ForeignKey(Movies, on_delete=models.CASCADE, related_name='series')
+
+    

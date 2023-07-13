@@ -12,10 +12,14 @@ class PostImageInLine(admin.TabularInline):
     max_num = 10
     min_num = 1
 
+class SeriesInLine(admin.TabularInline):
+    model = SeriesMovie
+    max_num = 12
+    min_num = 1
 
 @admin.register(Movies)
 class PostAdmin(admin.ModelAdmin):
-    inlines = [PostImageInLine, ]
+    inlines = [PostImageInLine, SeriesInLine]
 
 
 admin.site.register(Genre)

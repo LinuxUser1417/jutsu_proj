@@ -14,8 +14,20 @@ class MovieSerializer(serializers.ModelSerializer):
 
     def to_representation(self,instance):
         representation = super().to_representation(instance)
-        # serializer = PostImageSerializer(instance.images.all(),many=True, context = self.context)
         representation['images'] = PostImageSerializer(instance.images.all(),many=True, context = self.context).data
+        representation['series'] = SeriesSerializer(instance.series.all(),many=True, context = self.context).data
+        return representation
+
+class MovieListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movies
+        fields = ('title','poster')
+
+    def to_representation(self,instance):
+        representation = super().to_representation(instance)
+        # representation['title'] = MovieSerializer(instance.title.all())
+        # representation['series'] = len(SeriesSerializer(instance.series.all(),many=True, context = self.context).data)
+        representation['series'] = len(instance.series.all())
         return representation
 
 class PostImageSerializer(serializers.ModelSerializer):
@@ -23,4 +35,8 @@ class PostImageSerializer(serializers.ModelSerializer):
         model = PostImage
         fields = '__all__'
         
+class SeriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SeriesMovie
+        fields = '__all__'
 
