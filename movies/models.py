@@ -1,5 +1,5 @@
 from django.db import models
-
+from account.models import CustomUser
 
 class Genre(models.Model):
     name = models.CharField("Жанры", max_length=100)
@@ -66,3 +66,17 @@ class SeriesMovie(models.Model):
     post = models.ForeignKey(Movies, on_delete=models.CASCADE, related_name='series')
 
     
+class Comment(models.Model):
+    post = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    body = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.body
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)

@@ -6,6 +6,7 @@ from movies import views
 
 router = DefaultRouter()
 router.register('movies', views.MovieViewSet)
+router.register('favorites', views.FavoriteViewSet, basename='favorite') #добавить favorites/1/add_to_favorite/ #удалить http://127.0.0.1:8000/favorites/1/remove_from_favorite/
 
 urlpatterns = [
     path('movies/', views.MovieListSet.as_view({'get': 'list'})),
