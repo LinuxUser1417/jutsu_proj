@@ -16,7 +16,7 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["gunicorn", "-b", "34.125.83.252", "main:app"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
+RUN python manage.py collectstatic --no-input
 
-EXPOSE 8000
