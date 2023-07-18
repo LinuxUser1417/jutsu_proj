@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(' ')
 
@@ -45,10 +45,10 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_yasg',
     'corsheaders',
-    'corsheadersaccount',
     # my apps
     'account',
     'movies',
+    'footer',
 
 ]
 
