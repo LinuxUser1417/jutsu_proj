@@ -44,10 +44,11 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
     'drf_yasg',
-
+    'corsheaders'
     # my apps
     'account',
     'movies',
+
 ]
 
 MIDDLEWARE = [
@@ -203,3 +204,7 @@ CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
