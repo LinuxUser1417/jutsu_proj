@@ -1,6 +1,8 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
 from rest_framework.decorators import action
+from django.shortcuts import render
+from django.http import HttpResponse,HttpRequest
 # Create your views here.
 
 
@@ -11,7 +13,7 @@ from rest_framework import mixins, viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.authentication import TokenAuthentication
 
-from .models import  Movies, Favorite
+from .models import  Movies, Favorite, Rating
 from .serializers import  MovieSerializer, MovieListSerializer, CommentSerializer, FavoriteSerializer
 from .service import MovieFilter    
 from .forms import CommentForm
@@ -34,16 +36,6 @@ class MovieViewSet(mixins.RetrieveModelMixin,
     serializer_class = MovieSerializer
     queryset = Movies.objects.all()
     
-    def get_permissions(self):
-        if self.action in ['create', 'update', 'partial_update', 'destroy','add_comment']:
-            authentication_classes = [TokenAuthentication]
-            permission_classes = [permissions.IsAdminUser]
-        elif self.action in ['add_comment']:
-            authentication_classes = [TokenAuthentication]
-            permission_classes = [permissions.IsAuthenticated]
-        else:
-            permission_classes = [permissions.AllowAny]
-        return [permission() for permission in permission_classes]
     
     @action(detail=True, methods=['post'])
     def add_comment(self, request, pk=None):
@@ -57,8 +49,24 @@ class MovieViewSet(mixins.RetrieveModelMixin,
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+    def index(request: HttpRequest) -> HttpResponse:
+        movies = Movies.objects.all()
+        for movie in movies:
+            rating = Rating.objects.filter(movie=movie, user=request.user).first()
+            movie.user_rating = rating.rating if rating else 0
+        return render(request, "index.html", {"movies": movies})
 
 
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy','add_comment']:
+            authentication_classes = [TokenAuthentication]
+            permission_classes = [permissions.IsAdminUser]
+        elif self.action in ['add_comment','index']:
+            authentication_classes = [TokenAuthentication]
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.AllowAny]
+        return [permission() for permission in permission_classes]
 
 
 class MovieListPagination(PageNumberPagination):
@@ -107,3 +115,4 @@ class FavoriteViewSet(mixins.CreateModelMixin,
         favorite = Favorite.objects.get(user=request.user, movie=movie)
         favorite.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    

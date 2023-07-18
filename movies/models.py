@@ -1,5 +1,6 @@
 from django.db import models
 from account.models import CustomUser
+from django.core.validators import MaxValueValidator
 
 class Genre(models.Model):
     name = models.CharField("Жанры", max_length=100)
@@ -80,3 +81,11 @@ class Favorite(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
+
+class Rating(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    post = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0,validators=[MaxValueValidator(10)])
+
+    def __str__(self):
+        return f"{self.post.header}: {self.rating}"
