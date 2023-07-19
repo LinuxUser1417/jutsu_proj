@@ -3,7 +3,6 @@ djangorestframework
 pillow
 psycopg2-binary
 python-decouple
-decouple
 dj_rest_auth
 drf-yasg
 django-filter
@@ -17,3 +16,5 @@ redis
 django-redis
 gunicorn
 django-cors-headers
+pyTelegramBotAPI
+telebot
