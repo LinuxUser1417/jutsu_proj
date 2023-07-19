@@ -1,4 +1,4 @@
-export const API = "http://34.125.83.252/";
+export const API = "http://web:8000/";
 
 export const ACTIONS = {
   GET_PRODUCTS: "GET_PRODUCTS",
