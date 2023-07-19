@@ -65,8 +65,8 @@ services:
 
   front:
     build:
-      context: ./naruto
-      dockerfile: Dockerfile
+      context: naruto
+      dockerfile: naruto/Dockerfile
     ports:
       - "3000:3000"
     depends_on:
