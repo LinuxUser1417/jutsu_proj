@@ -6,7 +6,6 @@ services:
     command: >
       sh -c "gunicorn main.wsgi:application --bind 0.0.0.0:8000"
     volumes:
-      - .:/usr/src/app/
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
     ports:
@@ -38,7 +37,6 @@ services:
     depends_on:
       - db
 
-
   redis:
     image: redis:alpine
     expose:
@@ -64,11 +62,11 @@ services:
       - media_volume:/usr/src/app/media
     depends_on:
       - web
-  
+
   front:
     build:
       context: ./naruto
-      dockerfile: ./naruto/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
