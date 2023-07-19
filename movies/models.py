@@ -1,5 +1,6 @@
 from django.db import models
-
+from account.models import CustomUser
+from django.core.validators import MaxValueValidator
 
 class Genre(models.Model):
     name = models.CharField("Жанры", max_length=100)
@@ -65,3 +66,26 @@ class SeriesMovie(models.Model):
     title = models.CharField(verbose_name="Название", max_length=300)
     seria = models.FileField(upload_to='series',null=True)
     post = models.ForeignKey(Movies, on_delete=models.CASCADE, related_name='series')
+
+class Comment(models.Model):
+    post = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    body = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.body
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+class Rating(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    post = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0,validators=[MaxValueValidator(10)])
+
+    def __str__(self):
+        return f"{self.post.header}: {self.rating}"

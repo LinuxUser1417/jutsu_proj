@@ -44,3 +44,15 @@ class SeriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = SeriesMovie
         fields = '__all__'
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id', 'post', 'user', 'body', 'timestamp')
+        read_only_fields = ('id', 'timestamp')
+
+class FavoriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Favorite
+        fields = ('id', 'user', 'movie', 'created')
+        read_only_fields = ('id', 'created')
